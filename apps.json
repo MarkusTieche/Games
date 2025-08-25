@@ -1,0 +1,26 @@
+[
+    {
+        "title": "Glider King",
+        "description": "Spotify is a digital music service that gives you access to millions of songs.",
+        "icon": "https://play-lh.googleusercontent.com/RiATNyo9bnw3eW-Hn3bSlEYTlQaUlG6gHs1vFK90ObWujR3YaEKpvofrfI3XAPobnXs=s512-rw",
+        "playstoreUrl": "https://play.google.com/store/apps/details?id=com.spotify.music",
+        "appstoreUrl": "https://apps.apple.com/app/spotify-music-and-podcasts/id324684580",
+        "htmlUrl": "",
+        "itchUrl": "",
+        "steamUrl": "",
+        "tags":["web","mobile","desktop"]
+
+    },
+    {
+        "title": "Pogo Flip",
+        "description": "WhatsApp is a fast, simple, and secure messaging app used by over 2B people.",
+        "icon": "https://play-lh.googleusercontent.com/_GV9Xz42ptRmsYy5JMAJHvQcXGHTQthHYLNUkFjX4O9CZnlIfpqPaqFxU6_kBRxQOIbd=s512-rw",
+        "playstoreUrl": "https://play.google.com/store/apps/details?id=com.spotify.music",
+        "appstoreUrl": "https://apps.apple.com/app/spotify-music-and-podcasts/id324684580",
+        "htmlUrl": "https://apps.apple.com/app/spotify-music-and-podcasts/id324684580",
+        "itchUrl": "https://apps.apple.com/app/spotify-music-and-podcasts/id324684580",
+        "steamUrl": "https://apps.apple.com/app/spotify-music-and-podcasts/id324684580",
+        "githubUrl": "https://apps.apple.com/app/spotify-music-and-podcasts/id324684580",
+        "tags": ["mobile","desktop"]
+    }
+]

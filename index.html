@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Games</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <nav aria-label="Filter by tag">
+        <div id="nav-content">
+            <h2>GAMES</h2>
+            <div style="position: absolute;right: 0px;top:20px;">
+                <div id="tag-filter-nav">
+                    <button class="tag-filter-btn tag-mobile" onclick="filterCards('mobile',event.currentTarget)" title="mobile" aria-pressed="false"></button>
+                    <button class="tag-filter-btn tag-desktop" onclick="filterCards('desktop',event.currentTarget)" title="Desktop" aria-pressed="false"></button>
+                    <button class="tag-filter-btn tag-web" onclick="filterCards('web',event.currentTarget)" title="Web" aria-pressed="false"></button>
+                </div>    
+        </div>
+        </div>
+    </nav>
+    <header>
+        <!-- <img id="logo" src="BonzaiLogo_2.png"/> -->
+    </header>
+
+    <main id="app-cards" class="card-container">
+        <!-- Cards will be inserted here dynamically -->
+    </main>
+
+    <div class="overlay" id="overlay">
+        <div class="overlay-content" id="overlayContent">
+            <h2>Welcome</h2>
+            <p>This is your white center div inside a transparent overlay.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p class="copyrigth"> </p>
+        <a href="#" class="open-overlay" id="openOverlay">PrivacyPolicie</a>
+    </footer>
+
+    <script>
+        const overlay = document.getElementById('overlay');
+        const overlayContent = document.getElementById('overlayContent');
+        const openOverlayLink = document.getElementById('openOverlay');
+        const nav = document.getElementById('tag-filter-nav');
+        let currentTag = null;
+
+         // Show overlay on link click
+            openOverlayLink.addEventListener('click',async function (e) {
+                e.preventDefault();
+                try {
+                    const response = await fetch('privacypolicy.html');
+                    if (!response.ok) throw new Error('Could not load content.');
+                    overlayContent.innerHTML = '<div id="overlayClose" class="overlay-close">&times;</div>'
+                    const html = await response.text();
+                    overlayContent.innerHTML += html;
+                    overlay.style.display = 'flex';
+                    document.body.classList.add('no-scroll');
+                    document.getElementById('overlayClose').addEventListener('click', () => {closeModal()}, { once: true });
+
+                } catch (err) {
+                    overlayContent.innerHTML = '<p>Error loading content.</p>';
+                    overlay.style.display = 'flex';
+                    document.body.classList.add('no-scroll');
+                }
+            });
+
+            // Close overlay when clicking outside the content
+            overlay.addEventListener('click', function (e) {if (e.target === overlay) {closeModal()}});
+
+            function closeModal()
+            {
+                overlay.style.display = 'none';
+                overlayContent.innerHTML = '';
+                document.body.classList.remove('no-scroll');
+            }
+
+            fetch('apps.json')
+                    .then(res => res.json())
+                    .then(apps => {
+                        const container = document.getElementById('app-cards');
+
+                        apps.forEach(app => {
+                            const background = app.background || app.icon || 'https://placehold.co/600x300?text=App+Image';
+                            const card = document.createElement('div');
+                            card.className = 'card';
+
+                            // Create tag icons (if any)
+                            let tagIcons = '';
+                            if (Array.isArray(app.tags)) {
+                                tagIcons = app.tags.map((tag, index) => {
+                                    card.classList.add("tag-"+tag);
+                                    const className = `tag-icon tag-${tag.toLowerCase().replace(/\s+/g, '-')}`;
+                                    return `<div class="${className}" style="left: ${10 + index * 36}px;"></div>`;
+                                }).join('');
+                                                }
+
+                                // Card inner HTML
+                                card.innerHTML = `
+                                    <div class="card-image" style="background-image: url('${background}');">
+                                    ${tagIcons}
+                                    </div>
+                                    <div class="card-text">
+                                    <h2>${app.title}</h2>
+                                    <p>${app.description}</p>
+                                    <div class="button-group">
+                                        ${app.appstoreUrl ? `<a href="${app.appstoreUrl}" target="_blank" class="btn appstore"></a>` : ''}
+                                        ${app.playstoreUrl ? `<a href="${app.playstoreUrl}" target="_blank" class="btn playstore"></a>` : ''}
+                                        ${app.htmlUrl ? `<a href="${app.htmlUrl}" target="_blank" class="btn html"></a>` : ''}
+                                        ${app.itchUrl ? `<a href="${app.itchUrl}" target="_blank" class="btn itch"></a>` : ''}
+                                        ${app.steamUrl ? `<a href="${app.steamUrl}" target="_blank" class="btn steam"></a>` : ''}
+                                        ${app.githubUrl ? `<a href="${app.githubUrl}" target="_blank" class="btn github"></a>` : ''}
+                                    </div></div>`;
+
+                            container.appendChild(card);
+                        });
+                    });
+                
+                //NAV/TAGS
+                function filterCards(tag, activeButton = null) {
+                        const cards = document.querySelectorAll('.card');
+                        //RESET
+                        if(currentTag == tag)
+                        {
+                            currentTag = null;
+                            if (activeButton) activeButton.classList.remove('active');
+                            nav.classList.remove('filter-active');
+                            cards.forEach(card => card.classList.remove('hidden'));
+                            return;
+                        }
+                        
+                        currentTag = tag;
+
+                        nav.querySelectorAll('.tag-filter-btn').forEach(btn => btn.classList.remove('active'));
+                        if (activeButton) activeButton.classList.add('active');
+
+                        cards.forEach(card => {
+                            if (!tag) {
+                                card.classList.remove('hidden');
+                            } else {
+                                card.classList.toggle('hidden', !card.classList.contains(`tag-${tag}`));
+                                nav.classList.add('filter-active');
+                            }
+                        });
+
+                        if (activeButton && tag) {
+                            activeButton.classList.add('active');
+                        }
+                    }
+    </script>
+      
+</body>
+
+</html>
