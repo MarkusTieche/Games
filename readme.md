@@ -3,6 +3,13 @@
 This project is a simple web page that dynamically displays a collection of games or apps using data loaded from a `JSON` file.  
 It supports **tag-based filtering** (`mobile`, `desktop`, `web`) and provides links to external platforms such as App Store, Play Store, Steam, Itch.io, GitHub, or HTML5 builds.
 
+
+<p align="center">
+  <a href="https://markustieche.github.io/Games/" target="_blank" style="font-size: 1.5rem; text-decoration: none;">
+    🎮 View Games Page
+  </a>
+</p>
+
 ---
 
 ## Features
